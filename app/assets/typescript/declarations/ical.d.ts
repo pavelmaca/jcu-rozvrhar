@@ -2,13 +2,13 @@ declare module ICAL {
 
     export function parse(data: string): any[];
 
-    export interface Property {
+    export abstract class Property {
         /**
          * The value type for this property
          * @readonly
          * @type {String}
          */
-            type: string;
+        type: string;
         /**
          * The name of this property, in lowercase.
          * @readonly
@@ -21,6 +21,7 @@ declare module ICAL {
          * @type {ICAL.Component}
          */
         parent: Component;
+
         parent(p: Component);
 
 
@@ -30,7 +31,7 @@ declare module ICAL {
          * @param {String}        name   Property name (lowercase)
          * @return {Array|String}        Property value
          */
-        getParameter (name: string): any;
+        getParameter(name: string): any;
 
         /**
          * Sets a parameter on the property.
@@ -123,7 +124,7 @@ declare module ICAL {
 
     }
 
-    export interface Component {
+    export abstract class Component {
 
         constructor(jcalData: any);
 
@@ -204,7 +205,7 @@ declare module ICAL {
          *
          * @param {String=} name            Lowercase component name
          */
-        removeAllSubcomponents (name: string);
+        removeAllSubcomponents(name: string);
 
         /**
          * Adds an {@link ICAL.Property} to the component.
@@ -212,7 +213,8 @@ declare module ICAL {
          * @param {ICAL.Property} property      The property to add
          * @return {ICAL.Property}              The passed in property
          */
-        addProperty (property: Property): Property ;
+        addProperty(property: Property): Property ;
+
         /**
          * Helper method to add a property with a value to the component.
          *
@@ -231,7 +233,7 @@ declare module ICAL {
          * @param {String|Number|Object} value        Property value
          * @return {ICAL.Property}                    The created property
          */
-        updatePropertyWithValue (name, value): Property;
+        updatePropertyWithValue(name, value): Property;
 
         /**
          * Removes a single property by name or the instance of the specific
@@ -240,7 +242,7 @@ declare module ICAL {
          * @param {String|ICAL.Property} nameOrProp     Property name or instance to remove
          * @return {Boolean}                            True, when deleted
          */
-        removeProperty (nameOrProp): boolean;
+        removeProperty(nameOrProp): boolean;
 
         /**
          * Removes all properties associated with this component, optionally
@@ -262,13 +264,13 @@ declare module ICAL {
          * The string representation of this component.
          * @return {String}
          */
-        toString (): string;
+        toString(): string;
 
         /**
          * Create an {@link ICAL.Component} by parsing the passed iCalendar string.
          *
          * @param {String} str        The iCalendar string to parse
          */
-        fromString (str): Component;
+        fromString(str): Component;
     }
 }
