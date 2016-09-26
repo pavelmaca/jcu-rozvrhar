@@ -5,14 +5,11 @@ class Course {
     protected faculty: string;
     protected number: number;
 
-    protected subfix : string;
-
     protected info: any;
 
-    constructor(faculty, number, suffix) {
+    constructor(faculty, number) {
         this.faculty = faculty;
         this.number = number;
-        this.subfix = suffix;
     }
 
     toString(): string {
@@ -31,9 +28,4 @@ class Course {
     public getCode(){
         return this.toString();
     }
-
-    public getSuffix(){
-        return this.subfix;
-    }
-
 }

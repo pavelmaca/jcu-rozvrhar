@@ -22,9 +22,7 @@ class Calendar {
             let courseCode: string = this.readCourseCode(event.summary);
             if (!this.courses.has(courseCode)) {
                 let codeParts = courseCode.split('/');
-                let suffix = event.summary.split(' - ');
-
-                this.courses.set(courseCode, new Course(codeParts[0], codeParts[1], suffix[1]));
+                this.courses.set(courseCode, new Course(codeParts[0], codeParts[1]));
             }
         }
     }
@@ -60,7 +58,7 @@ class Calendar {
             let courseCode = this.readCourseCode(event.summary)
             let course: Course = this.courses.get(courseCode);
 
-            event.summary = this.formatTitle(course, selectedFormat);
+            event.summary = this.formatTitle(event, course, selectedFormat);
         }
 
         $("#download")
@@ -68,7 +66,7 @@ class Calendar {
             .removeClass('hidden');
     }
 
-    protected formatTitle(course: Course, format: number): string {
+    protected formatTitle(event:ICAL.Event, course: Course, format: number): string {
         let title: string[] = new Array();
 
         if (format % Calendar.FORMAT_CODE == 0) {
@@ -80,7 +78,8 @@ class Calendar {
         }
 
         if (format % Calendar.FORMAT_SUFFIX == 0) {
-            title.push(course.getSuffix());
+            let suffix = event.summary.split(' - ');
+            title.push(suffix[1]);
         }
 
         return title.join(' - ');

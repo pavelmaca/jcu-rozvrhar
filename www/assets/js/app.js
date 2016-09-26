@@ -49,8 +49,7 @@ class Calendar {
             let courseCode = this.readCourseCode(event.summary);
             if (!this.courses.has(courseCode)) {
                 let codeParts = courseCode.split('/');
-                let suffix = event.summary.split(' - ');
-                this.courses.set(courseCode, new Course(codeParts[0], codeParts[1], suffix[1]));
+                this.courses.set(courseCode, new Course(codeParts[0], codeParts[1]));
             }
         }
     }
@@ -80,13 +79,13 @@ class Calendar {
             var event = new ICAL.Event(vevent);
             let courseCode = this.readCourseCode(event.summary);
             let course = this.courses.get(courseCode);
-            event.summary = this.formatTitle(course, selectedFormat);
+            event.summary = this.formatTitle(event, course, selectedFormat);
         }
         $("#download")
             .attr('href', 'data:text/calendar;charset=UTF-8,' + encodeURIComponent(this.vcalendar.toString()))
             .removeClass('hidden');
     }
-    formatTitle(course, format) {
+    formatTitle(event, course, format) {
         let title = new Array();
         if (format % Calendar.FORMAT_CODE == 0) {
             title.push(course.getCode());
@@ -95,7 +94,8 @@ class Calendar {
             title.push(course.getName());
         }
         if (format % Calendar.FORMAT_SUFFIX == 0) {
-            title.push(course.getSuffix());
+            let suffix = event.summary.split(' - ');
+            title.push(suffix[1]);
         }
         return title.join(' - ');
     }
@@ -130,10 +130,9 @@ catch (ex) {
  * @author Pavel Máca <maca.pavel@gmail.com>
  */
 class Course {
-    constructor(faculty, number, suffix) {
+    constructor(faculty, number) {
         this.faculty = faculty;
         this.number = number;
-        this.subfix = suffix;
     }
     toString() {
         return this.faculty + '/' + this.number;
@@ -146,8 +145,5 @@ class Course {
     }
     getCode() {
         return this.toString();
-    }
-    getSuffix() {
-        return this.subfix;
     }
 }
