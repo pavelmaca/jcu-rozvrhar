@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>Nette Sandbox</title>
+
+    <link rel="stylesheet" href="/assets/css/vendor.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+
+    <meta name="viewport" content="width=device-width">
+</head>
+
+<body>
+<div class="container">
+    <h2>Rozvrhář</h2>
+    <p>Prozaím pouze doplní názvy předmětů do exportovaného rozvrhu.</p>
+
+    <form id="uploadForm" class="col-md-7">
+        <div class="form-group">
+            <label for="icsFile">Nahrát ICAL </label>
+            <input type="file" id="icsFile" accept=".ics">
+            <p class="help-block">Váš rozvrh exportovaný ze STAGu ve formátu ICAL.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="titleFormat">Formátovat název akce</label>
+            <select class="form-control" id="titleFormat">
+                <option value="30" selected>UAI/123 - Programování I - cvičení</option>
+                <option value="6">UAI/123 - Programování I</option>
+                <option value="15">Programování I - cvičení</option>
+                <option value="3">Programování I</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Zpracovat</button>
+
+        <a id="download" download="edited.ics" class="btn btn-success hidden">Stáhnout</a>
+    </form>
+</div>
+
+<script src="/assets/js/vendor.js"></script>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>
