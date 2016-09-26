@@ -161,14 +161,14 @@ gulp.task('app:typescript', function () {
 
 gulp.task('template', function () {
     git.short(function (str) {
-        gulp.src(['./app/presenters/templates/@layout.latte'])
+        gulp.src(['./www/index.html'])
             .pipe(replace(/(\?v=)[a-f0-9]{7}/g, '$1' + str))
-            .pipe(gulp.dest('./app/presenters/templates/'));
+            .pipe(gulp.dest('./www/'));
     });
 });
 
 gulp.task('app:production', ['env:production', 'app:typescript', 'app:css', 'template']);
-gulp.task('app:develop', ['env:develop', 'app:typescript', 'app:css']);
+gulp.task('app:develop', ['env:develop', 'app:typescript', 'app:css', 'template']);
 
 gulp.task('all:production', ['clean', 'bower:production', 'app:production']);
 gulp.task('all:develop', ['clean', 'bower:develop', 'app:develop']);
