@@ -1,0 +1,13 @@
+{
+  "name": "jcu.assassik.cz",
+  "version": "1.0",
+  "license": "",
+  "private": true,
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "bootstrap": "^3.3.6",
+    "font-awesome": "FortAwesome/Font-Awesome#^4.6.0",
+    "moment": "^2.12.0",
+    "ical.js": "mozilla-comm/ical.js#^1.2.2"
+  }
+}

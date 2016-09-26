@@ -273,4 +273,216 @@ declare module ICAL {
          */
         fromString(str): Component;
     }
+
+    export class Event {
+
+        constructor(vevent: Component);
+
+        /**
+         * List of related event exceptions.
+         *
+         * @type {ICAL.Event[]}
+         */
+        exceptions: any;
+
+        /**
+         * When true, will verify exceptions are related by their UUID.
+         *
+         * @type {Boolean}
+         */
+        strictExceptions: boolean;
+
+        /**
+         * Relates a given event exception to this object.  If the given component
+         * does not share the UID of this event it cannot be related and will throw
+         * an exception.
+         *
+         * If this component is an exception it cannot have other exceptions
+         * related to it.
+         *
+         * @param {ICAL.Component|ICAL.Event} obj       Component or event
+         */
+        relateException(obj: Component|Event) ;
+
+        /**
+         * Checks if this record is an exception and has the RANGE=THISANDFUTURE
+         * value.
+         *
+         * @return {Boolean}        True, when exception is within range
+         */
+        modifiesFuture(): boolean;
+
+        /**
+         * Finds the range exception nearest to the given date.
+         *
+         * @param {ICAL.Time} time usually an occurrence time of an event
+         * @return {?ICAL.Event} the related event/exception or null
+         */
+        findRangeException(time): Event;
+
+        /**
+         * This object is returned by {@link ICAL.Event#getOccurrenceDetails getOccurrenceDetails}
+         *
+         * @typedef {Object} occurrenceDetails
+         * @memberof ICAL.Event
+         * @property {ICAL.Time} recurrenceId       The passed in recurrence id
+         * @property {ICAL.Event} item              The occurrence
+         * @property {ICAL.Time} startDate          The start of the occurrence
+         * @property {ICAL.Time} endDate            The end of the occurrence
+         */
+
+        /**
+         * Returns the occurrence details based on its start time.  If the
+         * occurrence has an exception will return the details for that exception.
+         *
+         * NOTE: this method is intend to be used in conjunction
+         *       with the {@link ICAL.Event#iterator iterator} method.
+         *
+         * @param {ICAL.Time} occurrence time occurrence
+         * @return {ICAL.Event.occurrenceDetails} Information about the occurrence
+         */
+        getOccurrenceDetails: any;
+
+        /**
+         * Builds a recur expansion instance for a specific point in time (defaults
+         * to startDate).
+         *
+         * @param {ICAL.Time} startTime     Starting point for expansion
+         * @return {ICAL.RecurExpansion}    Expansion object
+         */
+        iterator(startTime);
+
+        /**
+         * Checks if the event is recurring
+         *
+         * @return {Boolean}        True, if event is recurring
+         */
+        isRecurring();
+
+        /**
+         * Checks if the event describes a recurrence exception. See
+         * {@tutorial terminology} for details.
+         *
+         * @return {Boolean}    True, if the even describes a recurrence exception
+         */
+        isRecurrenceException(): boolean;
+
+        /**
+         * Returns the types of recurrences this event may have.
+         *
+         * Returned as an object with the following possible keys:
+         *
+         *    - YEARLY
+         *    - MONTHLY
+         *    - WEEKLY
+         *    - DAILY
+         *    - MINUTELY
+         *    - SECONDLY
+         *
+         * @return {Object.<ICAL.Recur.frequencyValues, Boolean>}
+         *          Object of recurrence flags
+         */
+        getRecurrenceTypes();
+
+        /**
+         * The uid of this event
+         * @type {String}
+         */
+        uid: string;
+
+        uid(value: string);
+
+        /**
+         * The start date
+         * @type {ICAL.Time}
+         */
+        startDate;
+
+        startDate(value);
+
+        /**
+         * The end date. This can be the result directly from the property, or the
+         * end date calculated from start date and duration.
+         * @type {ICAL.Time}
+         */
+        endDate;
+
+        endDate(value);
+
+        /**
+         * The duration. This can be the result directly from the property, or the
+         * duration calculated from start date and end date.
+         * @type {ICAL.Duration}
+         * @readonly
+         */
+        duration;
+
+        /**
+         * The location of the event.
+         * @type {String}
+         */
+        location: string;
+
+        location(value: string);
+
+        /**
+         * The attendees in the event
+         * @type {ICAL.Property[]}
+         * @readonly
+         */
+        attendees: Property[];
+
+
+        /**
+         * The event summary
+         * @type {String}
+         */
+        summary: string;
+
+        summary(value: string);
+
+        /**
+         * The event description.
+         * @type {String}
+         */
+        description: string;
+
+        description(value: string);
+
+        /**
+         * The organizer value as an uri. In most cases this is a mailto: uri, but
+         * it can also be something else, like urn:uuid:...
+         * @type {String}
+         */
+        organizer: string;
+
+        organizer(value: string) ;
+
+        /**
+         * The sequence value for this event. Used for scheduling
+         * see {@tutorial terminology}.
+         * @type {Number}
+         */
+        sequence: number;
+
+        sequence(value: number);
+
+        /**
+         * The recurrence id for this event. See {@tutorial terminology} for details.
+         * @type {ICAL.Time}
+         */
+        recurrenceId;
+
+        recurrenceId(value);
+
+
+        /**
+         * The string representation of this event.
+         * @return {String}
+         */
+        toString(): string;
+
+        compareRangeException(a, b): number;
+
+    }
 }
