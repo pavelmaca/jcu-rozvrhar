@@ -63,20 +63,6 @@ function loadBowerFiles() {
                             './dist/css/bootstrap.min.css.map',
                             './dist/fonts/*.*'
                         ]
-                    },
-                    'font-awesome': {
-                        main: [
-                            "./css/font-awesome.css",
-                            "./fonts/fontawesome-webfont.*",
-                        ]
-                    },
-                    'bootstrap-table': {
-                        "main": [
-                            "./src/bootstrap-table.js",
-                            "./src/bootstrap-table.css",
-                            "./src/extensions/sticky-header/bootstrap-table-sticky-header.js",
-                            "./src/extensions/sticky-header/bootstrap-table-sticky-header.css",
-                        ],
                     }
                 }
             }));
@@ -176,7 +162,7 @@ gulp.task('app:typescript', function () {
 gulp.task('template', function () {
     git.short(function (str) {
         gulp.src(['./app/presenters/templates/@layout.latte'])
-            .pipe(replace(/(\?v=)[a-f0-9]{7}/g, '$1'+str))
+            .pipe(replace(/(\?v=)[a-f0-9]{7}/g, '$1' + str))
             .pipe(gulp.dest('./app/presenters/templates/'));
     });
 });
